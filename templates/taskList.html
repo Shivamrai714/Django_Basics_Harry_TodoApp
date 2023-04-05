@@ -1,0 +1,41 @@
+{% extends 'base.html' %} 
+
+{% block content %}
+
+<div class="container my-5 " >
+    <h1 class="text-center my-2">List of All Todo Tasks </h1>
+   
+ 
+    <table class="table my-3">
+        <thead>
+          <tr>
+            <th scope="col">SNo</th>
+            <th scope="col">Task Title </th>
+            <th scope="col">Task Descriptions </th>
+            
+          </tr>
+        </thead>
+        
+        
+        <tbody>
+         <!-- Run a for loop and iterate through all fetched taks s from databsae. -->
+         
+         {% for task in tasks %}
+
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{task.taskTitle}}</td>
+            <td>{{task.taskDesc}}</td>
+            
+          </tr>
+         
+          {% endfor %}
+          
+        </tbody>
+      </table>
+   
+   
+</div>
+
+
+{% endblock %}

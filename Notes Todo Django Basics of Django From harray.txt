@@ -1,0 +1,97 @@
+
+
+
+Steps To create New Project Todo App: 
+1. Make Django Application , install django universally from the powershell 
+2. => pip install django 
+3.Create the project using django-admin
+   => django-admin startproject todoList
+4.Now open the created project in VsCode. Drag drop the project . (Now optional : create the virtual environment for project and make new termial in active environtment. )
+5.Now create the new app for the project ie home App .
+ => python manage.py startapp home
+6.now create the basics other folders like static , template etc  (Make sure to create project structure , by Opoening app in file explorer. )
+7. Make necessary configuration inside the setting.py file of todoList project.
+ -add the templates folder in TEMPLATE=[] , in 'DIRS'   - use BASE_DIR join to make it easy for django to find template folder inside the BASE_DIR(structre of full project )
+    'DIRS': [os.path.join(BASE_DIR,'templates')],
+ -add static files dir aslo in same way.
+     STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+ -also adding our current app  'home'  inside the INSTALLED_APP=[] 
+
+8.Now check your project is running fine by command
+ => python manage.py runserver
+9.Now we go to follow the MVT ( Model View Template ) structure . ( Here model are basically python classes that communicate with database and represent the structures , views  are used to communicate between model and templates and deliver response to clients , templates are structures to show pages. )
+10.Now just open the url.py file of project and copy it to our home app.
+11.Then define the url in project app to show the views of specific App. Also define the end points method in views.
+   -In urls.py file of Project , we are going to include the home.url  app
+   -Then in urls.py file of Home app , we are going to render the views , so just add path to show specific views from eg  path('', views.home , name='home') , 
+   -Also make sure to define the method in the views file eg 
+            def home(request):
+  		  return  HttpResponse('Home view')
+   -Now some sort of warrning are going to come ie to migrate the changes. Makemigrations  means to create the SQL equilvalent code  , and to  python manage.py migrate .. helps to create the tables in the database from the sql equilatent code from the model classes defined.
+   
+12.Now do the concept of tempalte inheritance. Make a base.html containing  header, footer , navbar and  Django {% block content %} {% blockend %}  , also use this line whenever inheriting this base template in any file 
+
+     {% extends 'base.html' %} {% block content %}   ........  {% end content %}
+
+13. Now simply use the table to show all the list of the todo list.So make the    and use the bootstrap table to show them .
+  -Make another file taskList.html  and  put bootstrap table code there.  
+  -Now just extend / inherit the base template and then  do the configuration accordingly.
+  -Define the method  def of task in views of home App .
+  -In home.url file , then  just make the path('tasks' , taskList.html , name='taskList')
+
+14. Now we are going to make  Model to save the data of form to be saved in sqllite database.
+
+    -Install the Django extension of VsCode in virtual environment. (Enable it for auto import )
+    -Now crate the model in model.py file of Home app.
+
+    -now also save this App in INSTALLED APPS list (if now done till now , otherwise the migration will not work .)
+
+15. Now go to the admin.py file to register the model App
+
+16. Stop currrent project .  Now open another terminal by + and create the super userr to access the django database and see the required tables .
+
+   python manage.py createsuperuser  (It give error , as we have not makemigrations (SQL equivalent codee ) )
+    
+==> python manage.py makemigrations   (will create SQL equivalent code using Models )
+==> python manage.py migrate          (will create table in  DB using previous created code )
+
+Now create the super user and give password, name etc 
+
+==> python manage.py createsuperuser
+
+  Rerun the project again. 
+   ==> python manage.py runserver
+ 
+And now open  ie http://127.0.0.1:8000/admin   to see the database of Django and login with created id, and password
+
+-def _str__(self):  method is used to chage appearnce of Task in database
+
+17. Now add the action and post in the Add task forrm
+ -Now When we click the Submit button csrf errorr will come , just add the csrf_token inside the form tag
+ -Now handle the post request in the home method in views file.
+    if post request , then handle the forrm submit.
+    if get request come, just show the Form to add Task
+
+-We are using the context dictionary object to show the Alert of form submission to user , using conditional statements 
+
+--- Stopped on Alert message video Tut : 16
+I have created a mistake in the making the table / model  , so just delete the db.sqlite3 file and also internal file of migratation folder. 
+Now open the terminal and then just  done 
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+
+Now go to    127.0.0.1/admin  to view the database . (Make sure u have created python  manage.py createsuperuser )
+
+
+18. using the if statements , we have rendered the alert box dyanmically after the form submission.
+-Also {% comments %} {% endcomments %} are not visisble on view page source , but <!-- html comment are visisble -->
+
+-Learn more about it : google Django Tags and filters.
+
+
+19. Showing the all todo in the list . And showing them in tasks page.
+
+
+
+
